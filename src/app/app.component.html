@@ -1,0 +1,19 @@
+<form [formGroup]="demoForm">
+  <div class="select1">
+    <mat-form-field appearance="fill">
+      <mat-label>Select 1</mat-label>
+      <mat-select formControlName="select1">
+        <mat-option *ngFor="let opt of firstLst" [value]="opt">{{opt}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="select2">
+    <mat-form-field appearance="fill">
+      <mat-label>Select 2</mat-label>
+      <mat-select formControlName="select2">
+        <mat-option *ngFor="let opt of secondLst" [value]="opt">{{opt}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</form>
