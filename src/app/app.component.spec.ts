@@ -4,6 +4,8 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
 
 let loader: HarnessLoader;
 
@@ -31,7 +33,7 @@ describe('AppComponent', () => {
   });
 
   it('harness should load specific mat-select or all of them', async () => {
-    
+
     // Get all mat-selects in the components
     const matSelects = await loader.getAllHarnesses(MatSelectHarness);
     console.log("matSelects=", matSelects);
@@ -63,7 +65,7 @@ describe('AppComponent', () => {
   it('should set the value of the mat-select component', async () => {
     const select2Loader = await loader.getChildLoader('.select2');
     const matSelect2 = await select2Loader.getHarness(MatSelectHarness);
-   
+
     await matSelect2.open();
 
     const options2 = await matSelect2.getOptions();
@@ -72,5 +74,32 @@ describe('AppComponent', () => {
     const valueText = await matSelect2.getValueText();
     expect(valueText).toBe('Adios');
   });
+
+  it('mat-form-field should detect errors after validations are triggered', async () => {
+    const select2Loader = await loader.getChildLoader('.select2');
+    const matFormField = await select2Loader.getHarness(MatFormFieldHarness);
+    const matSelect2 = await matFormField.getControl() as MatSelectHarness;
+
+    await matSelect2.open();
+
+    const options = await matSelect2.getOptions();
+    await options[0].click();
+
+    const submitButton = (await loader.getAllHarnesses(MatButtonHarness))[0];
+
+    expect((await matSelect2.getValueText())).toEqual('Hej då');
+
+    // Check both the form field and the control are invalid
+    expect((await matSelect2.isValid())).toBeFalse();
+    expect((await matFormField.isControlValid())).toBeFalse();
+
+    // Check the errors
+    expect((await matFormField.hasErrors())).toBeTrue();
+    expect((await matFormField.getTextErrors())).toEqual(['There is a validation error in select 2']);
+
+    // Check the submit button is disabled
+    expect((await submitButton.isDisabled())).toBeTrue();
+  })
+
 });
 

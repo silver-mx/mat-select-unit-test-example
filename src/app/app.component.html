@@ -5,6 +5,7 @@
       <mat-select formControlName="select1">
         <mat-option *ngFor="let opt of firstLst" [value]="opt">{{opt}}</mat-option>
       </mat-select>
+      <mat-error *ngIf="demoForm.get('select1')?.errors">{{ 'There is a validation error in select 1' }}</mat-error>
     </mat-form-field>
   </div>
 
@@ -14,6 +15,11 @@
       <mat-select formControlName="select2">
         <mat-option *ngFor="let opt of secondLst" [value]="opt">{{opt}}</mat-option>
       </mat-select>
+      <mat-error *ngIf="demoForm.get('select2')?.errors">{{ 'There is a validation error in select 2' }}</mat-error>
     </mat-form-field>
+  </div>
+
+  <div class="example-button-row">
+    <button type="submit" mat-button color="primary" (onclick)="onSubmitForm()" [disabled]="demoForm.invalid">Save</button>
   </div>
 </form>

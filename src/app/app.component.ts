@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +13,11 @@ export class AppComponent {
   secondLst = ['Hej då', 'Bye', 'Adios']
 
   demoForm = new FormGroup({
-    select1: new FormControl(this.firstLst[0]),
-    select2: new FormControl(this.secondLst[0]),
+    select1: new FormControl(this.firstLst[0], Validators.maxLength(3)),
+    select2: new FormControl(this.secondLst[0], Validators.maxLength(5)),
   });
 
+  onSubmitForm(): void {
+
+  }
 }
