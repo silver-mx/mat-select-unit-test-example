@@ -2,10 +2,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
-import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 let loader: HarnessLoader;
 
@@ -15,7 +18,12 @@ describe('AppComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppModule],
+      imports: [
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        NoopAnimationsModule
+      ],
       declarations: [AppComponent]
     })
       .compileComponents();
